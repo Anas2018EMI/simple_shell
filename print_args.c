@@ -1,5 +1,5 @@
 #include <unistd.h>
-/* betty style doc for function _sqrt_check goes there */
+/* betty style doc for function main goes there */
 /**
  * main - Entry point
  * @ac: first arg
