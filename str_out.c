@@ -5,31 +5,31 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
-/* betty style doc for function count_word goes there */
+/* betty style doc for function count_words goes there */
 /**
- * count_word - Entry point
- *
- * Return: Always return 0
+ * count_words - Entry point
+ * @str: first arg *
+ * Return: int
  */
 int count_words(char *str)
 {
-        int i = 0, len = 0;
+	int i = 0, len = 0;
 
-        while (*(str + i))
-        {
-                if (*(str + i) == ' ')
-                {
-                        len++;
-                }
-                i++;
-        }
+	while (*(str + i))
+	{
+		if (*(str + i) == ' ')
+		{
+			len++;
+		}
+		i++;
+	}
 	return (len + 1);
 }
-/* betty style doc for function main goes there */
+/* betty style doc for function prompt goes there */
 /**
  * prompt - Entry point
  *
- * Return: Always return 0
+ * Return: char *
  */
 char *prompt(void)
 {
@@ -52,16 +52,16 @@ char *prompt(void)
 
 	return (NULL);
 }
-/* betty style doc for function main goes there */
+/* betty style doc for function split_string goes there */
 /**
- * prompt - Entry point
- *
- * Return: Always return 0
+ * split_string - Entry point
+ * @str: first arg
+ * Return: char **
  */
 char **split_string(char *str)
 {
 	int i = 0, len;
-	char* token;
+	char *token;
 	char **arr;
 
 	len = count_words(str);
@@ -88,23 +88,29 @@ char **split_string(char *str)
 
 	return (arr);
 }
-
-int main()
+/* betty style doc for function main goes there */
+/**
+ * main - Entry point
+ * Return: int
+ */
+int main(void)
 {
 	char *str;
 	int len, i;
-	char** arr;
+	char **arr;
 
 	str = prompt();
 	len = count_words(str);
 	arr = malloc((len + 1) * sizeof(char *));
-        if (arr == NULL)
-        {
-                return (NULL);
-        }
-	arr = split_string(char *str);
-	for (i = 0; i < len + 1; i++)
+	if (arr == NULL)
+	{
+		return (-1);
+	}
+	arr = split_string(str);
+	for (i = 0; i < len; i++)
 	{
 		printf("%s\n", arr[i]);
 	}
+	free(arr);
+	return (0);
 }
