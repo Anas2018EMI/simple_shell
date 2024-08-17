@@ -41,6 +41,7 @@ char** split(char *str)
 		}
 		strcpy(arr[i], token);
 		token = strtok(NULL, " ");
+		i++;
 	}
 
 
