@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 	result = _setenv(argv[1], argv[2], overwrite);
 	if (result == 0) 
 	{
-
+		result = _setenv(argv[1], "Modified Value", overwrite);
 		execve("/bin/bash", args, environ);
 	}
 	/* if (result == 0) 
