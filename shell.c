@@ -50,7 +50,7 @@ int main(int argc, char **argv)
             path = NULL;
             /* ptr->next = NULL; */
 
-            str = prompt(argv);
+            str = prompt(argv, list);
             if (str == NULL || str[0] == '\0')
             {
                 free(str);
@@ -193,7 +193,7 @@ int non_interact(char **argv, node *list)
     char *str, *path;
     node *ptr;
 
-    str = prompt(argv);
+    str = prompt(argv, list);
     if (str == NULL)
         return (-1);
     args = split_string(str);
@@ -289,3 +289,4 @@ int non_interact(char **argv, node *list)
     }
     return (0);
 }
+

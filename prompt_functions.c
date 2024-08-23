@@ -46,11 +46,12 @@ int count_words(char *str)
  * @argv: first arg
  * Return: char *
  */
-char *prompt(char **argv)
+char *prompt(char **argv, node *list)
 {
 	char *terminal = "$ ", *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
+	node *temp;
 	int i = 0;
 
 	_print(terminal);
@@ -59,7 +60,14 @@ char *prompt(char **argv)
 	{
 		perror(argv[0]);
 		free(line);
-		return (NULL);
+		while (list)
+        {
+            temp = list;
+            list = list->next;
+            free(temp->str);
+            free(temp);
+        }
+		exit(EXIT_FAILURE); /* End of File condition*/
 	}
 
 	while (line[i] != '\0')

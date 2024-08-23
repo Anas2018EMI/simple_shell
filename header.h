@@ -28,6 +28,7 @@ typedef struct node
 
 extern char **environ;
 
+
 /* shell.c */
 int non_interact(char **argv, node *list);
 void handle_sigint(int sig);
@@ -35,7 +36,7 @@ void handle_sigint(int sig);
 /* prompt_functions.c */
 void _print(char *str);
 int count_words(char *str);
-char *prompt(char **argv);
+char *prompt(char **argv, node *list);
 char **split_string(char *str);
 void free_memory(char *str, char **argv);
 
