@@ -65,7 +65,7 @@ int main(int argc, char **argv)
                 continue;
             }
 
-                        if (args[0] != NULL && strcmp(args[0], "env") == 0)
+            if (args[0] != NULL && strcmp(args[0], "env") == 0)
             {
                 print_env();
                 free_memory(str, args);
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 
                 exit(0);
             }
-            
+
             is_exist = check_path(args[0]);
             if (is_exist == -1)
             {
@@ -214,7 +214,7 @@ int non_interact(char **argv, node *list)
     int execute, status, is_exist;
     char **args;
     char *str, *path;
-    node *ptr;
+    node *ptr, *temp;
 
     str = prompt(argv, list);
     if (str == NULL)
@@ -225,6 +225,27 @@ int non_interact(char **argv, node *list)
         free(str);
         perror("Memory allocation error");
         return (-1);
+    }
+    if (args[0] != NULL && strcmp(args[0], "env") == 0)
+    {
+        print_env();
+        free_memory(str, args);
+        return(0);
+    }
+
+    if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+    {
+        free_memory(str, args);
+
+        while (list)
+        {
+            temp = list;
+            list = list->next;
+            free(temp->str);
+            free(temp);
+        }
+
+        exit(0);
     }
     is_exist = check_path(args[0]);
     if (is_exist == -1)
@@ -312,4 +333,3 @@ int non_interact(char **argv, node *list)
     }
     return (0);
 }
-
