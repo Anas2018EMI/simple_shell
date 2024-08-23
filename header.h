@@ -47,4 +47,6 @@ char **split_path(char *str);
 node *list_path(void);
 int check_path(char *path);
 
+/* _env.c */
+void print_env(void);
 #endif

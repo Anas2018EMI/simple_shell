@@ -64,6 +64,29 @@ int main(int argc, char **argv)
                 perror("Memory allocation error");
                 continue;
             }
+
+                        if (args[0] != NULL && strcmp(args[0], "env") == 0)
+            {
+                print_env();
+                free_memory(str, args);
+                continue;
+            }
+
+            if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+            {
+                free_memory(str, args);
+
+                while (list)
+                {
+                    temp = list;
+                    list = list->next;
+                    free(temp->str);
+                    free(temp);
+                }
+
+                exit(0);
+            }
+            
             is_exist = check_path(args[0]);
             if (is_exist == -1)
             {
