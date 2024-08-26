@@ -94,12 +94,13 @@ char **split_string(char *str)
 	char **arr;
 
 	len = count_words(str);
+	printf("number of enterd words: %i \n", len);
 	arr = malloc((len + 1) * sizeof(char *));
 	if (arr == NULL)
 	{
 		return (NULL);
 	}
-	token = strtok(str, " ");
+	token = my_strtok(str, " ");
 	while (token != NULL)
 	{
 		arr[i] = _strdup(token);
@@ -112,7 +113,8 @@ char **split_string(char *str)
 			free(arr);
 			return (NULL);
 		}
-		token = strtok(NULL, " ");
+		printf("%s\n", arr[i]);
+		token = my_strtok(NULL, " ");
 		i++;
 	}
 	arr[i] = NULL;

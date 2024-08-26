@@ -13,6 +13,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h> /* You need to recode this library's functions*/
+#include <stdbool.h>
+
 
 /**
  * struct node - singly linked list
@@ -56,8 +58,16 @@ int check_path(char *path);
 
 /* _env.c */
 int print_env(char **argv);
+
 /* _getline.c*/
 int check_input(char **lineptr, size_t *n);
 int mem_realloc(size_t lc, size_t ls, char *line, char **lineptr, size_t *n);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
+
+/* my_strtok()*/
+bool is_delimiter(char c, const char *delimiters);
+char *skip_delimiters(char *str, const char *delimiters);
+char *find_token_end(char *str, const char *delimiters);
+char *my_strtok(char *str, const char *delimiters);
+
 #endif

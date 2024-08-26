@@ -56,7 +56,7 @@ int main(int argc, char **argv)
                 free(str);
                 continue;
             }
-
+            printf("Entered string: %s\n", str);
             args = split_string(str);
             if (args == NULL)
             {
