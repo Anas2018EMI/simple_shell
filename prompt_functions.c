@@ -56,7 +56,7 @@ char *prompt(char **argv, node *list)
 	int i = 0;
 
 	_print(terminal);
-	nread = getline(&line, &len, stdin);
+	nread = _getline(&line, &len, STDIN_FILENO);
 	if (nread == -1) /* End of File condition*/
 	{
 		perror(argv[0]);

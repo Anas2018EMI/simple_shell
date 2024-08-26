@@ -2,6 +2,8 @@
 #define SIMPLE_SHELL
 
 #define _GNU_SOURCE
+#define BUFFER_SIZE 1024
+#define INITIAL_LINE_SIZE 128
 
 #include <stdlib.h>
 #include <stddef.h>
@@ -54,4 +56,8 @@ int check_path(char *path);
 
 /* _env.c */
 int print_env(char **argv);
+/* _getline.c*/
+int check_input(char **lineptr, size_t *n);
+int mem_realloc(size_t lc, size_t ls, char *line, char **lineptr, size_t *n);
+ssize_t _getline(char **lineptr, size_t *n, int fd);
 #endif
