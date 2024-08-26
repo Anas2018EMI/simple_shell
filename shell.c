@@ -57,6 +57,8 @@ int main(int argc, char **argv)
                 continue;
             }
 
+            handle_comments(str);    
+
             args = split_string(str);
             if (args == NULL)
             {
@@ -213,6 +215,9 @@ int non_interact(char **argv, node *list)
     str = prompt(argv, list);
     if (str == NULL)
         return (-1);
+
+    handle_comments(str);  
+
     args = split_string(str);
     if (args == NULL)
     {
