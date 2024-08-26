@@ -4,15 +4,16 @@
 #define _GNU_SOURCE
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <unistd.h>
-#include <signal.h>
 #include <string.h> /* You need to recode this library's functions*/
 
 /**
- * struct list_s - singly linked list
+ * struct node - singly linked list
  * @str: string - (malloc'ed string)
  * @next: points to the next node
  *
@@ -24,10 +25,14 @@ typedef struct node
 	struct node *next;
 } node;
 
- 
-
 extern char **environ;
 
+/*string_functions.c */
+int _strcmp(char *s1, char *s2);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+char *_strdup(char *str);
+char *_strstr(char *haystack, char *needle);
 
 /* shell.c */
 int non_interact(char **argv, node *list);
@@ -48,5 +53,5 @@ node *list_path(void);
 int check_path(char *path);
 
 /* _env.c */
-void print_env(void);
+int print_env(char **argv);
 #endif

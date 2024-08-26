@@ -44,6 +44,7 @@ int count_words(char *str)
 /**
  * prompt - Entry point
  * @argv: first arg
+ * @list: second arg
  * Return: char *
  */
 char *prompt(char **argv, node *list)
@@ -61,12 +62,12 @@ char *prompt(char **argv, node *list)
 		perror(argv[0]);
 		free(line);
 		while (list)
-        {
-            temp = list;
-            list = list->next;
-            free(temp->str);
-            free(temp);
-        }
+		{
+			temp = list;
+			list = list->next;
+			free(temp->str);
+			free(temp);
+		}
 		exit(EXIT_FAILURE); /* End of File condition*/
 	}
 
@@ -101,7 +102,7 @@ char **split_string(char *str)
 	token = strtok(str, " ");
 	while (token != NULL)
 	{
-		arr[i] = strdup(token);
+		arr[i] = _strdup(token);
 		if (arr[i] == NULL)
 		{
 			for (j = 0; j < i; j++)
