@@ -1,8 +1,4 @@
 #include "header.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
 /* betty style doc for function _getenv goes there */
 /**
  * _getenv - Entry point
@@ -11,18 +7,36 @@
  */
 char *_getenv(const char *name)
 {
-	int i = 0;
-	char *value;
+	int i = 0, name_len;
+	char *value, *name_copy;
 
+	name_len = 0;
+	while (name[name_len] != '\0')
+	{
+		name_len++;
+	}
+	name_copy = malloc(name_len + 1);
+	if (name_copy == NULL)
+	{
+		return (NULL);
+	}
+	for (i = 0; i <= name_len; i++)
+	{
+		name_copy[i] = name[i];
+	}
+	i = 0;
 	while (environ[i])
 	{
-		if (strstr(environ[i], name) != NULL && environ[i][0] == name[0])
+		if (_strstr(environ[i], name_copy) != NULL && environ[i][0] == name[0])
 		{
-			value = &environ[i][strlen(name) + 1];
+			value = &environ[i][_strlen(name_copy) + 1];
+			free(name_copy);
 			return (value);
 		}
 		i++;
 	}
+	free(name_copy);
+
 	return (NULL);
 }
 /* betty style doc for function count_paths goes there */
@@ -70,7 +84,7 @@ char **split_path(char *str)
 	token = strtok(str, ":");
 	while (token != NULL)
 	{
-		arr[i] = strdup(token);
+		arr[i] = _strdup(token);
 		if (arr[i] == NULL)
 		{
 			for (j = 0; j < i; j++)
@@ -103,13 +117,9 @@ node *list_path(void)
 	value = _getenv("PATH");
 	if (value == NULL)
 		return (NULL);
-	/* paths = malloc(count_paths(value) * sizeof(char *));
-	 */
 	paths = split_path(value);
 	if (paths == NULL)
-	{
-		return (NULL); /*free(value); */
-	}
+		return (NULL);
 
 	while (paths[i])
 	{
@@ -124,9 +134,9 @@ node *list_path(void)
 				free(temp);
 			}
 			for (i = 0; paths[i]; i++)
-            {
-                free(paths[i]);
-            }
+			{
+				free(paths[i]);
+			}
 			free(paths);
 			return (NULL);
 		}
