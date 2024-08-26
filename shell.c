@@ -76,17 +76,7 @@ int main(int argc, char **argv)
 
             if (args[0] != NULL && _strcmp(args[0], "exit") == 0)
             {
-                free_memory(str, args);
-
-                while (list)
-                {
-                    temp = list;
-                    list = list->next;
-                    free(temp->str);
-                    free(temp);
-                }
-
-                exit(0);
+                handle_exit(str ,args, list);
             }
 
             is_exist = check_path(args[0]);
@@ -218,7 +208,7 @@ int non_interact(char **argv, node *list)
     int execute, status, is_exist, env_var;
     char **args;
     char *str, *path;
-    node *ptr, *temp;
+    node *ptr;
 
     str = prompt(argv, list);
     if (str == NULL)
@@ -239,17 +229,7 @@ int non_interact(char **argv, node *list)
 
     if (args[0] != NULL && _strcmp(args[0], "exit") == 0)
     {
-        free_memory(str, args);
-
-        while (list)
-        {
-            temp = list;
-            list = list->next;
-            free(temp->str);
-            free(temp);
-        }
-
-        exit(0);
+        handle_exit(str ,args, list);
     }
     is_exist = check_path(args[0]);
     if (is_exist == -1)

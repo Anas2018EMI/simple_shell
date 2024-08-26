@@ -60,4 +60,8 @@ int print_env(char **argv);
 int check_input(char **lineptr, size_t *n);
 int mem_realloc(size_t lc, size_t ls, char *line, char **lineptr, size_t *n);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
+/* _exit.c */
+int _is_digit(char c);
+int _atoi(char *s);
+void handle_exit(char *str, char **args, node *list);
 #endif
