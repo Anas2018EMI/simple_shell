@@ -143,7 +143,6 @@ node *list_path(void)
 		n->str = paths[i];
 		n->next = list;
 		list = n;
-		printf("%s\n", n->str); /* To be deleted */
 		i++;
 	}
 	free(paths);
@@ -160,13 +159,10 @@ int check_path(char *path)
 {
 	struct stat st;
 
-	printf("%s:", path); /* to be deleted*/
 	if (stat(path, &st) == 0)
 	{
-		printf(" FOUND\n");
 		return (0);
 	}
 
-	printf(" NOT FOUND\n");
 	return (-1);
 }

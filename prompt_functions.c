@@ -68,7 +68,7 @@ char *prompt(char **argv, node *list)
 			free(temp->str);
 			free(temp);
 		}
-		exit(EXIT_FAILURE); /* End of File condition*/
+		exit(EXIT_FAILURE); /* End of File condition   return (NULL)*/  
 	}
 
 	while (line[i] != '\0')
@@ -99,7 +99,7 @@ char **split_string(char *str)
 	{
 		return (NULL);
 	}
-	token = strtok(str, " ");
+	token = my_strtok(str, " ");
 	while (token != NULL)
 	{
 		arr[i] = _strdup(token);
@@ -112,7 +112,7 @@ char **split_string(char *str)
 			free(arr);
 			return (NULL);
 		}
-		token = strtok(NULL, " ");
+		token = my_strtok(NULL, " ");
 		i++;
 	}
 	arr[i] = NULL;
