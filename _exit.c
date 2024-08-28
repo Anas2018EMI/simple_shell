@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 /**
  * _atoi - Convert a string to an integer.
  * @s: The string to be converted.
@@ -8,46 +7,43 @@
  */
 int _atoi(char *s)
 {
-int sign = 1;
-int digit;
-int result = 0;
-int i = 0;
-int seen_digit = 0;
+	int sign = 1;
+	int digit;
+	int result = 0;
+	int i = 0;
+	int seen_digit = 0;
 
+	while (s[i] != '\0' && s[i] == ' ')
+	{
+		i++;
+	}
 
-while (s[i] != '\0' && s[i] == ' ')
-{
-i++;
+	while (s[i] != '\0' && (s[i] == '-' || s[i] == '+'))
+	{
+		if (s[i] == '-')
+		{
+			sign = -sign;
+		}
+		i++;
+	}
+
+	while (s[i] >= '0' && s[i] <= '9')
+	{
+		seen_digit = 1;
+		digit = s[i] - '0';
+		result = result * 10 + digit;
+		i++;
+	}
+
+	if (!seen_digit)
+	{
+		return (0);
+	}
+
+	result *= sign;
+
+	return (result);
 }
-
-
-while (s[i] != '\0' && (s[i] == '-' || s[i] == '+'))
-{
-if (s[i] == '-')
-{
-sign = -sign;
-}
-i++;
-}
-
-while (s[i] >= '0' && s[i] <= '9')
-{
-seen_digit = 1;
-digit = s[i] - '0';
-result = result * 10 + digit;
-i++;
-}
-
-if (!seen_digit)
-{
-return (0);
-}
-
-result *= sign;
-
-return (result);
-}
-
 
 /**
  * _is_digit - checks if a character is a digit
@@ -58,12 +54,12 @@ return (result);
 
 int _is_digit(char c)
 {
-if (c >= '0' && c <= '9')
-{
-return (1);
-}
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
 
-return (0);
+	return (0);
 }
 
 /**
@@ -75,41 +71,41 @@ return (0);
 
 void handle_exit(char *str, char **args, node *list)
 {
-int status = 0, i;
-node *temp;
+	int status = 0, i;
+	node *temp;
 
-if (args[1] != NULL)
-{
-i = 0;
-while (args[1][i] != '\0')
-{
-if (_is_digit(args[1][i]) == 0)
-{
-perror(args[0]);
-free_memory(str, args);
-while (list)
-{
-temp = list;
-list = list->next;
-free(temp->str);
-free(temp);
-}
-exit(2);
-}
-i++;
-}
+	if (args[1] != NULL)
+	{
+		i = 0;
+		while (args[1][i] != '\0')
+		{
+			if (_is_digit(args[1][i]) == 0)
+			{
+				perror(args[0]);
+				free_memory(str, args);
+				while (list)
+				{
+					temp = list;
+					list = list->next;
+					free(temp->str);
+					free(temp);
+				}
+				exit(2);
+			}
+			i++;
+		}
 
-status = _atoi(args[1]);
-}
+		status = _atoi(args[1]);
+	}
 
-free_memory(str, args);
-while (list)
-{
-temp = list;
-list = list->next;
-free(temp->str);
-free(temp);
-}
+	free_memory(str, args);
+	while (list)
+	{
+		temp = list;
+		list = list->next;
+		free(temp->str);
+		free(temp);
+	}
 
-exit(status);
+	exit(status);
 }

@@ -68,7 +68,7 @@ char *prompt(char **argv, node *list)
 			free(temp->str);
 			free(temp);
 		}
-		exit(EXIT_FAILURE); /* End of File condition   return (NULL)*/  
+		exit(EXIT_FAILURE); /* End of File condition   return (NULL)*/
 	}
 
 	while (line[i] != '\0')
