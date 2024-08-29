@@ -49,9 +49,10 @@ int handle_builtin_commands2(char **argv, node *list, char **args, char *str)
 		return (env_var);
 	}
 
-	if (args[0] != NULL && _strcmp(args[0], "exit") == 0)
+	if (args[0] != NULL && _strncmp(args[0], "exit", 4) == 0)
 	{
 		handle_exit(str, args, list);
+		return (2);
 	}
 
 	return (0);

@@ -92,6 +92,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd);
 int _is_digit(char c);
 int _atoi(char *s);
 void handle_exit(char *str, char **args, node *list);
+int _strncmp(const char *s1, const char *s2, size_t n);
 
 /* _comments.c */
 void handle_comments(char *line);

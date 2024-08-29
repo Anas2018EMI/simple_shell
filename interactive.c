@@ -103,7 +103,7 @@ int handle_builtin_commands(char **args, char **argv, node *list, char *str)
 		return (0);
 	}
 
-	if (_strcmp(args[0], "exit") == 0)
+	if (_strncmp(args[0], "exit", 4) == 0)
 	{
 		handle_exit(str, args, list);
 		return (0);
