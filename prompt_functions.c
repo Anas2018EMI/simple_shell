@@ -49,7 +49,7 @@ int count_words(char *str)
  */
 char *prompt(char **argv, node *list)
 {
-	char *terminal = "$ ", *line = NULL;
+	char *terminal = "", *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
 	node *temp;
