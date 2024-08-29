@@ -11,24 +11,24 @@
 
 char *_strchr(char *s, char c)
 {
-int i;
-char *ptr = NULL;
+	int i;
+	char *ptr = NULL;
 
-for (i = 0 ; s[i] != '\0' ; i++)
-{
-if (s[i] == c)
-{
-ptr = &s[i];
-break;
-}
-}
+	for (i = 0 ; s[i] != '\0' ; i++)
+	{
+		if (s[i] == c)
+		{
+			ptr = &s[i];
+			break;
+		}
+	}
 
-if (s[i] == c)
-{
-ptr = &s[i];
-}
+	if (s[i] == c)
+	{
+		ptr = &s[i];
+	}
 
-return (ptr);
+	return (ptr);
 }
 
 /**
@@ -37,10 +37,10 @@ return (ptr);
  */
 void handle_comments(char *line)
 {
-char *start_of_comment = _strchr(line, '#');
+	char *start_of_comment = _strchr(line, '#');
 
-if (start_of_comment != NULL)
-{
-*start_of_comment = '\0';
-}
+	if (start_of_comment != NULL)
+	{
+		*start_of_comment = '\0';
+	}
 }

@@ -155,4 +155,3 @@ int execute_external_command(char **args, char **argv, node *list, char *str)
 	execute_process(path, args, argv, &child_pid, str);
 	return (0);
 }
-
