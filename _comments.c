@@ -44,3 +44,4 @@ void handle_comments(char *line)
 		*start_of_comment = '\0';
 	}
 }
+

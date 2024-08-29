@@ -166,3 +166,4 @@ int check_path(char *path)
 
 	return (-1);
 }
+

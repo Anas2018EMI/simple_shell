@@ -5,6 +5,7 @@
  * handle_non_interactive - Entry point
  * @argv: first arg
  * @list: second arg
+ * @str: third arg
  * Return: int
  */
 int handle_non_interactive(char **argv, node *list, char *str) /**/
@@ -155,3 +156,5 @@ int execute_external_command(char **args, char **argv, node *list, char *str)
 	execute_process(path, args, argv, &child_pid, str);
 	return (0);
 }
+
+

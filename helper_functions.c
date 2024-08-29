@@ -115,3 +115,4 @@ char *check_full_path(int *is_exist, char *path, node *list, char **args)
 	}
 	return (NULL);
 }
+
