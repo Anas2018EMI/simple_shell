@@ -90,7 +90,7 @@ void handle_exit(char *str, char **args, node *list)
 					free(temp->str);
 					free(temp);
 				}
-				exit(2);
+				exit(-1);
 			}
 			i++;
 		}
@@ -126,5 +126,5 @@ int _strncmp(const char *s1, const char *s2, size_t n)
         }
     }
 
-    return 0;
+    return (0);
 }
