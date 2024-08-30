@@ -3,6 +3,8 @@
 /* volatile sig_atomic_t keep_running = 1; */
 node *list = NULL;
 char *str;
+
+
 /* betty style doc for function handle_sigint goes there */
 /**
  * handle_sigint - - Entry point
@@ -55,7 +57,7 @@ int main(int argc, char **argv)
 		return (-1);
 
 	if (isatty(STDIN_FILENO) == 0)
-		return (handle_non_interactive(argv, list, str));
+		return (handle_non_interactive(argv, list)); /* , str */
 	else if (isatty(STDIN_FILENO) == 1)
 
 		return (handle_interactive(argv, list, str));
@@ -71,20 +73,55 @@ int main(int argc, char **argv)
  * @str: third arg
  * Return: int
  */
-int non_interact(char **argv, node *list, char *str)
+int non_interact(char **argv, node *list)
 {
-	char *path = NULL;
-	char **args;
-	int result;
+	char *path = NULL, *line = NULL;
+	char **args = NULL; 
+	int result, read;
+	size_t len = 0;
+	 int command_count = 0; 
 
-	str = prompt(argv, list);
-	if (str == NULL)
-		return (-1);
+	
+	while ((read = getline(&line, &len, stdin)) != -1)
+	{
+		if (read > 0 && line[read - 1] == '\n')
+		{
+			line[read - 1] = '\0';
+		}
+		
+		result = process_input(argv, list, &args, line, command_count);
+		if (result == -1)
+		{
+			
+			free(line);
+			return (result);
+		}
+		
+		result = execute_command(argv, list, path, args, line);
+		
+		if (args)
+		{
+			free_args(args);
+			args = NULL;
+		}
+		command_count++;
+	}
+	
+	free(line);
 
-	result = process_input(argv, list, &args, str);
-	if (result != 0)
-		return (result);
-
-	return (execute_command(argv, list, path, args, str));
+	
+	return (result);
 }
 
+void free_args(char **args)
+{
+    int i;
+    if (args == NULL)
+        return;
+
+    for (i = 0; args[i] != NULL; i++)
+    {
+        free(args[i]);
+    }
+    free(args);
+}

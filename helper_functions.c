@@ -34,7 +34,7 @@ void free_mem(char *path, char **args, char **argv, char *str)
  */
 void execute_process(char *path, char **as, char **av, pid_t *cpid, char *str)
 {
-	int execute, status;
+	int execute,status; /*  */
 
 	if (*cpid == 0)
 	{
@@ -58,6 +58,44 @@ void execute_process(char *path, char **as, char **av, pid_t *cpid, char *str)
 		free_memory(str, as);
 		free(path);
 	}
+}
+
+/* betty style doc for function execute_process goes there */
+/**
+ * execute_process - Entry point
+ * @path: first arg
+ * @as: second arg
+ * @av: third arg
+ * @cpid: fourth arg
+ * @str: fifth arg
+ * Return: void
+ */
+int execute_process2(char *path, char **as, char **av, pid_t *cpid )
+{
+	int execute, status;
+
+	if (*cpid == 0)
+	{
+		execute = execve(path, as, environ);
+		
+		if (execute == -1)
+		{
+			perror(av[0]);
+			exit(EXIT_FAILURE);
+		}
+		
+	}
+	else
+	{
+		waitpid(*cpid, &status, 0);
+		
+	}
+
+	if (path != as[0])
+        free(path);
+
+	return (0);
+	
 }
 
 /* betty style doc for function free_list goes there */

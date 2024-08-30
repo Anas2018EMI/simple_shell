@@ -30,6 +30,9 @@ typedef struct node
 } node;
 
 extern char **environ;
+/* int status = 0; */
+/*struct stat st; */
+
 
 
 
@@ -43,7 +46,8 @@ char *_strstr(char *haystack, char *needle);
 /* shell.c */
 void handle_sigint(int sig);
 int initialize(int argc);
-int non_interact(char **argv, node *list, char *str);
+int non_interact(char **argv, node *list); /* , char *str*/
+void free_args(char **args);
 
 /* helper_functions.c*/
 void free_list(node *list);
@@ -51,16 +55,18 @@ char *check_full_path(int *is_exist, char *path, node *list, char **args);
 void execute_process(char *path, char **as, char **av, pid_t *cpid, char *str);
 void free_mem(char *path, char **args, char **argv, char *str);
 
+int execute_process2(char *path, char **as, char **av, pid_t *cpid);
+
 /* interactive.c */
 int execute_external_command(char **args, char **argv, node *list, char *str);
-int handle_non_interactive(char **argv, node *list, char *str);
+int handle_non_interactive(char **argv, node *list); /* , char *str */
 int handle_interactive(char **argv, node *list, char *str);
 int process_command(char **argv, node *list, char *str);
 int handle_builtin_commands(char **args, char **argv, node *list, char *str);
 
 /* non_interactive.c */
-int process_input(char **argv, node *list, char ***args, char *str);
-int handle_builtin_commands2(char **argv, node *list, char **args, char *str);
+int process_input(char **argv, node *list, char ***args, char *str, int cc);
+int handle_builtin_commands2(char **argv, node *list, char **args, char *str, int cc);
 int execute_command(char **av, node *list, char *path, char **as, char *str);
 int h_pnf(char **av, node *list, char **path, char **as, int *is, char *str);
 
@@ -91,8 +97,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd);
 /* _exit.c */
 int _is_digit(char c);
 int _atoi(char *s);
-void handle_exit(char *str, char **args, node *list);
-int _strncmp(const char *s1, const char *s2, size_t n);
+void handle_exit(char *str, char **args, node *list, int cc);
 
 /* _comments.c */
 void handle_comments(char *line);

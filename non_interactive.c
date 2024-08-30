@@ -9,24 +9,24 @@
  * @str: fourth arg
  * Return: int
  */
-int process_input(char **argv, node *list, char ***args, char *str)
+int process_input(char **argv, node *list, char ***args, char *line, int cc)
 {
-	handle_comments(str);
-	if (_strcmp(str, "\0") == 0)
+	handle_comments(line);
+	if (_strcmp(line, "\0") == 0)
 	{
-		free(str);
-		return (-1);
+		free(line);
+		return (0);
 	}
 
-	*args = split_string(str);
+	*args = split_string(line);
 	if (*args == NULL)
 	{
-		free(str);
-		perror("Memory allocation error");
+		free(line);
+		perror(argv[0]);
 		return (-1);
 	}
 
-	return (handle_builtin_commands2(argv, list, *args, str));
+	return (handle_builtin_commands2(argv, list, *args, line, cc));
 }
 
 /* betty style doc for function handle_builtin_commands2 goes there */
@@ -38,24 +38,22 @@ int process_input(char **argv, node *list, char ***args, char *str)
  * @str: fourth arg
  * Return: int
  */
-int handle_builtin_commands2(char **argv, node *list, char **args, char *str)
+int handle_builtin_commands2(char **argv, node *list, char **args, char *line, int cc)
 {
 	int env_var;
 
 	if (args[0] != NULL && _strcmp(args[0], "env") == 0)
 	{
 		env_var = print_env(argv);
-		/*free_memory(str, args);*/
 		return (env_var);
 	}
 
-	if (args[0] != NULL && _strncmp(args[0], "exit", 4) == 0)
+	if (args[0] != NULL && _strcmp(args[0], "exit") == 0)
 	{
-		handle_exit(str, args, list);
-		return (2);
+		handle_exit(line, args, list, cc);
 	}
 
-	return (0);
+	return (cc);
 }
 
 /* betty style doc for function execute_command goes there */
@@ -68,16 +66,15 @@ int handle_builtin_commands2(char **argv, node *list, char **args, char *str)
  * @str: fifth arg
  * Return: int
  */
-int execute_command(char **av, node *list, char *path, char **as, char *str)
+int execute_command(char **av, node *list, char *path, char **as, char *line)
 {
 	int is_exist;
-	/* char *found_path; */
-	pid_t child_pid;
+	pid_t child_pid, out;
 
 	is_exist = check_path(as[0]);
 	if (is_exist == -1)
 	{
-		if (h_pnf(av, list, &path, as, &is_exist, str) == -1)
+		if (h_pnf(av, list, &path, as, &is_exist, line) == -1)
 			return (-1);
 	}
 	else
@@ -88,12 +85,14 @@ int execute_command(char **av, node *list, char *path, char **as, char *str)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		free_mem(path, as, av, str);
+	
 		return (-1);
 	}
 
-	execute_process(path, as, av, &child_pid, str);
-	return (0);
+	
+	out = execute_process2(path, as, av, &child_pid);
+
+	return (out);
 }
 /* betty style doc for function h_pnf goes there */
 /**
@@ -118,6 +117,7 @@ int h_pnf(char **av, node *list, char **path, char **as, int *is, char *str)
 		free_memory(str, as);
 		return (-1);
 	}
+
+
 	return (0);
 }
-

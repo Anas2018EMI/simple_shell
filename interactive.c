@@ -8,11 +8,11 @@
  * @str: third arg
  * Return: int
  */
-int handle_non_interactive(char **argv, node *list, char *str) /**/
+int handle_non_interactive(char **argv, node *list) /* , char *str */
 {
 	int interact;
 
-	interact = non_interact(argv, list, str);
+	interact = non_interact(argv, list); /* , str */
 	free_list(list);
 	return (interact);
 }
@@ -103,9 +103,9 @@ int handle_builtin_commands(char **args, char **argv, node *list, char *str)
 		return (0);
 	}
 
-	if (_strncmp(args[0], "exit", 4) == 0)
+	if (_strcmp(args[0], "exit") == 0)
 	{
-		handle_exit(str, args, list);
+		handle_exit(str, args, list, 0);
 		return (0);
 	}
 

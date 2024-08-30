@@ -69,9 +69,9 @@ int _is_digit(char c)
  * @list: An array of strings representing the environment variables.
  */
 
-void handle_exit(char *str, char **args, node *list)
+void handle_exit(char *str, char **args, node *list, int cc)
 {
-	int status = 0, i;
+	int exit_status = 0, i;
 	node *temp;
 
 	if (args[1] != NULL)
@@ -90,15 +90,13 @@ void handle_exit(char *str, char **args, node *list)
 					free(temp->str);
 					free(temp);
 				}
-				exit(-1);
+				exit(2);
 			}
 			i++;
 		}
 
-		status = _atoi(args[1]);
+		exit_status = _atoi(args[1]);
 	}
-
-	free_memory(str, args);
 	while (list)
 	{
 		temp = list;
@@ -106,25 +104,28 @@ void handle_exit(char *str, char **args, node *list)
 		free(temp->str);
 		free(temp);
 	}
-
-	exit(status);
-}
-
-int _strncmp(const char *s1, const char *s2, size_t n)
-{
-    size_t i;
-
-    for (i = 0; i < n; i++)
-    {
-        if (s1[i] != s2[i])
-        {
-            return (s1[i] - s2[i]);
-        }
-        if (s1[i] == '\0')
-        {
-            break;
-        }
-    }
-
-    return (0);
+	if (isatty(STDIN_FILENO) == 1)
+	{
+		free_memory(str, args);
+		exit(exit_status);
+	}
+	else if (isatty(STDIN_FILENO) == 0)
+	{
+		if (args[1] != NULL)
+		{
+			free_args(args);
+			free(str);
+			exit(exit_status);
+		}
+		else
+		{
+			free_args(args);
+			free(str);
+			if (cc == 0)
+			{
+				exit(0);
+			}
+			exit(2);
+		}
+	}
 }
