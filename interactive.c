@@ -4,8 +4,6 @@
 /**
  * handle_non_interactive - Entry point
  * @argv: first arg
- * @list: second arg
- * @str: third arg
  * Return: int
  */
 int handle_non_interactive(char **argv) /* , char *str */
@@ -13,7 +11,7 @@ int handle_non_interactive(char **argv) /* , char *str */
 	int interact;
 
 	interact = non_interact(argv); /* , str */
-	
+
 	return (interact);
 }
 /* betty style doc for function free_args goes there */
@@ -24,15 +22,16 @@ int handle_non_interactive(char **argv) /* , char *str */
  */
 void free_args(char **args)
 {
-    int i;
-    if (args == NULL)
-        return;
+	int i;
 
-    for (i = 0; args[i] != NULL; i++)
-    {
-        free(args[i]);
-    }
-    free(args);
+	if (args == NULL)
+		return;
+
+	for (i = 0; args[i] != NULL; i++)
+	{
+		free(args[i]);
+	}
+	free(args);
 }
 
 /* betty style doc for function process_command goes there */
@@ -45,9 +44,7 @@ void free_args(char **args)
  */
 int process_command(char **argv, node *list, char *str)
 {
-	/* char *path = NULL; */
 	char **args;
-	/* int is_exist, env_var; */
 
 	str = prompt(argv, list);
 	if (str == NULL || str[0] == '\0')
@@ -93,7 +90,6 @@ int handle_builtin_commands(char **args, char **argv, node *list, char *str)
 
 	if (_strcmp(args[0], "env") == 0)
 	{
-		/* int env_var =  */
 		print_env(argv);
 		free_memory(str, args);
 		return (0);
@@ -148,7 +144,6 @@ int execute_external_command(char **args, char **argv, node *list, char *str)
 		free_mem(path, args, argv, str);
 		return (0);
 	}
-	/*free(str);*/
 	execute_process(path, args, argv, &child_pid, str);
 	return (0);
 }

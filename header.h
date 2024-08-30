@@ -12,7 +12,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <string.h> /* You need to recode this library's functions*/
+#include <string.h>
 #include <stdbool.h>
 #include <signal.h>
 
@@ -30,9 +30,6 @@ typedef struct node
 } node;
 
 extern char **environ;
-/* int status = 0; */
-/*struct stat st; */
-
 
 
 
@@ -45,8 +42,8 @@ char *_strstr(char *haystack, char *needle);
 
 /* shell.c */
 void handle_sigint(int sig);
-int initialize(); /* int argc*/
-int non_interact(char **argv); /* , char *str*/
+int initialize(void);
+int non_interact(char **argv);
 int handle_interactive(char **argv, char *str);
 
 
@@ -61,13 +58,13 @@ int execute_process2(char *path, char **as, char **av, pid_t *cpid);
 /* interactive.c */
 void free_args(char **args);
 int execute_external_command(char **args, char **argv, node *list, char *str);
-int handle_non_interactive(char **argv); /* , char *str */
+int handle_non_interactive(char **argv);
 int process_command(char **argv, node *list, char *str);
 int handle_builtin_commands(char **args, char **argv, node *list, char *str);
 
 /* non_interactive.c */
 int process_input(char **argv, node *list, char ***args, char *str, int cc);
-int handle_builtin_commands2(char **argv, node *list, char **args, char *str, int cc);
+int handle_builtin2(char **argv, node *list, char **args, char *str, int cc);
 int execute_command(char **av, node *list, char *path, char **as, char *str);
 int h_pnf(char **av, node *list, char **path, char **as, int *is, char *str);
 

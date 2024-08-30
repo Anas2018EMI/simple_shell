@@ -57,7 +57,7 @@ char *prompt(char **argv, node *list)
 
 	_print(terminal);
 	nread = _getline(&line, &len, STDIN_FILENO);
-	if (nread == -1) /* End of File condition*/
+	if (nread == -1)
 	{
 		perror(argv[0]);
 		free(line);
@@ -68,7 +68,7 @@ char *prompt(char **argv, node *list)
 			free(temp->str);
 			free(temp);
 		}
-		exit(EXIT_FAILURE); /* End of File condition   return (NULL)*/
+		exit(EXIT_FAILURE);
 	}
 
 	while (line[i] != '\0')
@@ -78,7 +78,6 @@ char *prompt(char **argv, node *list)
 		i++;
 	}
 	line[i] = '\0';
-	/* line[nread - 1] = '\0'; */
 	return (line);
 }
 /* betty style doc for function split_string goes there */

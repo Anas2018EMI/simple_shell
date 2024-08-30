@@ -6,7 +6,8 @@
  * @argv: first arg
  * @list: second arg
  * @args: third arg
- * @str: fourth arg
+ * @line: fourth arg
+ * @cc: fourth arg
  * Return: int
  */
 int process_input(char **argv, node *list, char ***args, char *line, int cc)
@@ -26,26 +27,26 @@ int process_input(char **argv, node *list, char ***args, char *line, int cc)
 		return (-1);
 	}
 
-	return (handle_builtin_commands2(argv, list, *args, line, cc));
+	return (handle_builtin2(argv, list, *args, line, cc));
 }
 
-/* betty style doc for function handle_builtin_commands2 goes there */
+/* betty style doc for function handle_builtin2 goes there */
 /**
- * handle_builtin_commands2 - Entry point
+ * handle_builtin2 - Entry point
  * @argv: first arg
  * @list: second arg
  * @args: third arg
- * @str: fourth arg
+ * @line: fourth arg
+ * @cc: fifth arg
  * Return: int
  */
-int handle_builtin_commands2(char **argv, node *list, char **args, char *line, int cc)
+int handle_builtin2(char **argv, node *list, char **args, char *line, int cc)
 {
 	int env_var;
 
 	if (args[0] != NULL && _strcmp(args[0], "env") == 0)
 	{
 		env_var = print_env(argv);
-		/*free_memory(str, args);*/
 		return (env_var);
 	}
 
@@ -64,13 +65,12 @@ int handle_builtin_commands2(char **argv, node *list, char **args, char *line, i
  * @list: second arg
  * @path: third arg
  * @as: fourth arg
- * @str: fifth arg
+ * @line: fifth arg
  * Return: int
  */
 int execute_command(char **av, node *list, char *path, char **as, char *line)
 {
 	int is_exist;
-	/* char *found_path; */
 	pid_t child_pid, out;
 
 	is_exist = check_path(as[0]);
@@ -87,13 +87,9 @@ int execute_command(char **av, node *list, char *path, char **as, char *line)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		/* free_mem(path, as, av, line); */	
 		return (-1);
 	}
-	/* // printf("path in execute_command: %s\n", path); */ 
-	
 	out = execute_process2(path, as, av, &child_pid);
-	/* printf("status in execute_command: %i\n", out); */
 	return (out);
 }
 /* betty style doc for function h_pnf goes there */
@@ -119,7 +115,6 @@ int h_pnf(char **av, node *list, char **path, char **as, int *is, char *str)
 		free_memory(str, as);
 		return (-1);
 	}
-	/* // printf("path in h_pnf: %s\n", *path); */
 
 	return (0);
 }

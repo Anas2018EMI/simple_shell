@@ -34,12 +34,10 @@ void free_mem(char *path, char **args, char **argv, char *str)
  */
 void execute_process(char *path, char **as, char **av, pid_t *cpid, char *str)
 {
-	int execute,status; /*  */
+	int execute, status;
 
 	if (*cpid == 0)
 	{
-		/* printf("path in execute_process: %s\n", path); */
-
 		execute = execve(path, as, environ);
 		if (execute == -1)
 		{
@@ -62,44 +60,41 @@ void execute_process(char *path, char **as, char **av, pid_t *cpid, char *str)
 	}
 }
 
-/* betty style doc for function execute_process goes there */
+/* betty style doc for function execute_process2 goes there */
 /**
- * execute_process - Entry point
+ * execute_process2 - Entry point
  * @path: first arg
  * @as: second arg
  * @av: third arg
  * @cpid: fourth arg
- * @str: fifth arg
  * Return: void
  */
-int execute_process2(char *path, char **as, char **av, pid_t *cpid )
+int execute_process2(char *path, char **as, char **av, pid_t *cpid)
 {
 	int execute, status;
 
 	if (*cpid == 0)
 	{
-		/* // printf("path in execute_process2: %s\n", path);*/ 
-
 		execute = execve(path, as, environ);
-		
+
 		if (execute == -1)
 		{
 			perror(av[0]);
 			exit(EXIT_FAILURE);
 		}
-		
+
 	}
 	else
 	{
 		waitpid(*cpid, &status, 0);
-		
+
 	}
 
 	if (path != as[0])
-        free(path);
+		free(path);
 
 	return (0);
-	
+
 }
 
 /* betty style doc for function free_list goes there */
@@ -147,7 +142,6 @@ char *check_full_path(int *is_exist, char *path, node *list, char **args)
 		path = _strcpy(path, ptr->str);
 		_strcpy(path + _strlen(ptr->str), "/");
 		_strcpy(path + _strlen(ptr->str) + 1, args[0]);
-		/* // printf("Trying this path: %s\n", path); */
 		*is_exist = check_path(path);
 		if (*is_exist != -1)
 		{

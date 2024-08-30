@@ -76,23 +76,19 @@ void handle_exit(char *str, char **args, node *list, int cc)
 
 	if (args[1] != NULL)
 	{
-		while (args[1][i] != '\0')
+		for (i = 0; args[1][i] != '\0'; i++)
 		{
 			if (_is_digit(args[1][i]) == 0)
 			{
 				perror(args[0]);
 				free_memory(str, args);
 				if (isatty(STDIN_FILENO) == 1)
-				{
 					free_list(list);
-				}
 				exit(2);
 			}
-			i++;
 		}
 		exit_status = _atoi(args[1]);
 	}
-
 	if (isatty(STDIN_FILENO) == 1)
 	{
 		free_memory(str, args);

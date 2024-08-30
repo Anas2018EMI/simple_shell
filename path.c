@@ -157,10 +157,7 @@ node *list_path(void)
  */
 int check_path(char *path)
 {
-	/* // struct stat *st = NULL; */
-
-	/* // printf("stat(path, st): %i\n",stat(path, st)); */
-	if (access(path, F_OK) == 0 ) /* stat(path, st) == 0 */
+	if (access(path, F_OK) == 0)
 	{
 		return (0);
 	}

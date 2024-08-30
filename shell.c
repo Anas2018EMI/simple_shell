@@ -1,6 +1,5 @@
 #include "header.h"
 
-/* volatile sig_atomic_t keep_running = 1; */
 node *list = NULL;
 char *str;
 
@@ -26,10 +25,9 @@ void handle_sigint(int sig)
 /* betty style doc for function initialize goes there */
 /**
  * initialize - Entry point
- * @argc: first arg
  * Return: int
  */
-int initialize() /* , node *lis*/
+int initialize(void)
 {
 	list = list_path();
 	if (list == NULL)
@@ -66,8 +64,6 @@ int main(int argc, char **argv)
 /**
  * non_interact - Entry point
  * @argv: first arg
- * @list: second arg
- * @str: third arg
  * Return: int
  */
 int non_interact(char **argv) /* , char *str */
@@ -78,33 +74,18 @@ int non_interact(char **argv) /* , char *str */
 	size_t len = 0;
 	int command_count = 0;
 
-	/* printf("non_interact\n"); */
-	while ((read = getline(&line, &len, stdin)) != -1) /* STDIN_FILENO for your code _getline() */
+	while ((read = getline(&line, &len, stdin)) != -1)
 	{
 		if (read > 0 && line[read - 1] == '\n')
 		{
 			line[read - 1] = '\0';
 		}
-		/* printf("Iteration\n"); */
-		/* i = 0;
-		while (line[i] != '\0')
-		{
-			if (line[i] == '\n')
-				break;
-			i++;
-		}
-		line[i] = '\0'; */
-
-		/* // printf("line: %s\n", line); */
 		result = process_input(argv, list, &args, line, command_count);
 		if (result == -1)
 		{
-			/* // printf("Error in process_input for command %d\n", command_count); */
 			free(line);
 			return (result);
 		}
-		/*  // printf("path in non_interact: %s\n", path);  */
-
 		if (result != 5)
 		{
 			if (initialize() == -1)
@@ -114,13 +95,8 @@ int non_interact(char **argv) /* , char *str */
 			result = execute_command(argv, list, path, args, line);
 			free_list(list);
 		}
-		else 
+		else
 			result = 0;
-		/* printf("result in non_interact: %i\n", result); */
-		/* if (result == -1)
-		{
-			printf("Error in execute_command for command %d\n", command_count);
-		} */
 		if (args)
 		{
 			free_args(args);
@@ -128,14 +104,7 @@ int non_interact(char **argv) /* , char *str */
 		}
 		command_count++;
 	}
-	/* printf("Exited main loop after processing %d commands\n", command_count); */
 	free(line);
-
-	/*str = prompt(argv, list);
-	if (str == NULL)
-		return (-1);
-*/
-	
 	return (result);
 }
 
@@ -143,7 +112,6 @@ int non_interact(char **argv) /* , char *str */
 /**
  * handle_interactive - Entry point
  * @argv: first arg
- * @list: second arg
  * @str: third arg
  * Return: int
  */
@@ -161,3 +129,4 @@ int handle_interactive(char **argv, char *str) /**/
 	free_list(list);
 	return (0);
 }
+
