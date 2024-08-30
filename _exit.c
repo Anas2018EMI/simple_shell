@@ -67,46 +67,36 @@ int _is_digit(char c)
  * @str: string typed to shell
  * @args: An array of strings representing the command and its arguments.
  * @list: An array of strings representing the environment variables.
+ * @cc: fourth argument
  */
 
 void handle_exit(char *str, char **args, node *list, int cc)
 {
-	int exit_status = 0, i;
-	node *temp;
+	int exit_status = 0, i = 0;
 
 	if (args[1] != NULL)
 	{
-		i = 0;
 		while (args[1][i] != '\0')
 		{
 			if (_is_digit(args[1][i]) == 0)
 			{
 				perror(args[0]);
 				free_memory(str, args);
-				while (list)
+				if (isatty(STDIN_FILENO) == 1)
 				{
-					temp = list;
-					list = list->next;
-					free(temp->str);
-					free(temp);
+					free_list(list);
 				}
 				exit(2);
 			}
 			i++;
 		}
-
 		exit_status = _atoi(args[1]);
 	}
-	while (list)
-	{
-		temp = list;
-		list = list->next;
-		free(temp->str);
-		free(temp);
-	}
+
 	if (isatty(STDIN_FILENO) == 1)
 	{
 		free_memory(str, args);
+		free_list(list);
 		exit(exit_status);
 	}
 	else if (isatty(STDIN_FILENO) == 0)
@@ -122,9 +112,7 @@ void handle_exit(char *str, char **args, node *list, int cc)
 			free_args(args);
 			free(str);
 			if (cc == 0)
-			{
 				exit(0);
-			}
 			exit(2);
 		}
 	}

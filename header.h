@@ -45,9 +45,10 @@ char *_strstr(char *haystack, char *needle);
 
 /* shell.c */
 void handle_sigint(int sig);
-int initialize(int argc);
-int non_interact(char **argv, node *list); /* , char *str*/
-void free_args(char **args);
+int initialize(); /* int argc*/
+int non_interact(char **argv); /* , char *str*/
+int handle_interactive(char **argv, char *str);
+
 
 /* helper_functions.c*/
 void free_list(node *list);
@@ -58,9 +59,9 @@ void free_mem(char *path, char **args, char **argv, char *str);
 int execute_process2(char *path, char **as, char **av, pid_t *cpid);
 
 /* interactive.c */
+void free_args(char **args);
 int execute_external_command(char **args, char **argv, node *list, char *str);
-int handle_non_interactive(char **argv, node *list); /* , char *str */
-int handle_interactive(char **argv, node *list, char *str);
+int handle_non_interactive(char **argv); /* , char *str */
 int process_command(char **argv, node *list, char *str);
 int handle_builtin_commands(char **args, char **argv, node *list, char *str);
 

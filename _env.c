@@ -7,12 +7,23 @@
  */
 int print_env(char **argv)
 {
-	int i = 0, env_length = 0;
-	char **my_env;
+	int  i = 0; /* i = 0, */
+	/* char **my_env; */ 
 
-	while (environ[env_length] != NULL)
-		env_length++;
-	my_env = malloc((env_length + 1) * sizeof(char *));
+	if (argv == NULL)
+		return (-1);
+	while (environ[i] != NULL)
+	{
+		_print(environ[i]);
+		_print("\n");
+		i++;
+	}
+		
+		
+
+	/* printf("env_length: %i\n",i);  To be deleted */
+
+	/* my_env = malloc((env_length + 1) * sizeof(char *));
 	if (my_env == NULL)
 	{
 		perror(argv[0]);
@@ -42,7 +53,7 @@ int print_env(char **argv)
 		free(my_env[i]);
 		i++;
 	}
-	free(my_env);
-	return (0);
+	free(my_env); */
+	return (5);
 }
 

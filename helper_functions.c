@@ -38,6 +38,8 @@ void execute_process(char *path, char **as, char **av, pid_t *cpid, char *str)
 
 	if (*cpid == 0)
 	{
+		/* printf("path in execute_process: %s\n", path); */
+
 		execute = execve(path, as, environ);
 		if (execute == -1)
 		{
@@ -76,6 +78,8 @@ int execute_process2(char *path, char **as, char **av, pid_t *cpid )
 
 	if (*cpid == 0)
 	{
+		/* // printf("path in execute_process2: %s\n", path);*/ 
+
 		execute = execve(path, as, environ);
 		
 		if (execute == -1)
@@ -143,6 +147,7 @@ char *check_full_path(int *is_exist, char *path, node *list, char **args)
 		path = _strcpy(path, ptr->str);
 		_strcpy(path + _strlen(ptr->str), "/");
 		_strcpy(path + _strlen(ptr->str) + 1, args[0]);
+		/* // printf("Trying this path: %s\n", path); */
 		*is_exist = check_path(path);
 		if (*is_exist != -1)
 		{

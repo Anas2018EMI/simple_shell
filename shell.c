@@ -4,7 +4,6 @@
 node *list = NULL;
 char *str;
 
-
 /* betty style doc for function handle_sigint goes there */
 /**
  * handle_sigint - - Entry point
@@ -30,14 +29,12 @@ void handle_sigint(int sig)
  * @argc: first arg
  * Return: int
  */
-int initialize(int argc) /* , node *lis*/
+int initialize() /* , node *lis*/
 {
-	if (argc < 0)
-		return (-1);
 	list = list_path();
 	if (list == NULL)
 	{
-		perror("Memory allocation error");
+		perror("Memory allocation error !!");
 		return (-1);
 	}
 	return (0);
@@ -53,14 +50,14 @@ int initialize(int argc) /* , node *lis*/
 
 int main(int argc, char **argv)
 {
-	if (initialize(argc) == -1)
+	if (argc < -1)
 		return (-1);
 
 	if (isatty(STDIN_FILENO) == 0)
-		return (handle_non_interactive(argv, list)); /* , str */
+		return (handle_non_interactive(argv)); /* , str */
 	else if (isatty(STDIN_FILENO) == 1)
 
-		return (handle_interactive(argv, list, str));
+		return (handle_interactive(argv, str));
 
 	return (0);
 }
@@ -73,32 +70,57 @@ int main(int argc, char **argv)
  * @str: third arg
  * Return: int
  */
-int non_interact(char **argv, node *list)
+int non_interact(char **argv) /* , char *str */
 {
 	char *path = NULL, *line = NULL;
-	char **args = NULL; 
-	int result, read;
+	char **args = NULL; /* **args2 = NULL; */
+	int result, read;	/* i = 0 */
 	size_t len = 0;
-	 int command_count = 0; 
+	int command_count = 0;
 
-	
-	while ((read = getline(&line, &len, stdin)) != -1)
+	/* printf("non_interact\n"); */
+	while ((read = getline(&line, &len, stdin)) != -1) /* STDIN_FILENO for your code _getline() */
 	{
 		if (read > 0 && line[read - 1] == '\n')
 		{
 			line[read - 1] = '\0';
 		}
-		
+		/* printf("Iteration\n"); */
+		/* i = 0;
+		while (line[i] != '\0')
+		{
+			if (line[i] == '\n')
+				break;
+			i++;
+		}
+		line[i] = '\0'; */
+
+		/* // printf("line: %s\n", line); */
 		result = process_input(argv, list, &args, line, command_count);
 		if (result == -1)
 		{
-			
+			/* // printf("Error in process_input for command %d\n", command_count); */
 			free(line);
 			return (result);
 		}
-		
-		result = execute_command(argv, list, path, args, line);
-		
+		/*  // printf("path in non_interact: %s\n", path);  */
+
+		if (result != 5)
+		{
+			if (initialize() == -1)
+			{
+				return (-1);
+			}
+			result = execute_command(argv, list, path, args, line);
+			free_list(list);
+		}
+		else 
+			result = 0;
+		/* printf("result in non_interact: %i\n", result); */
+		/* if (result == -1)
+		{
+			printf("Error in execute_command for command %d\n", command_count);
+		} */
 		if (args)
 		{
 			free_args(args);
@@ -106,22 +128,36 @@ int non_interact(char **argv, node *list)
 		}
 		command_count++;
 	}
-	
+	/* printf("Exited main loop after processing %d commands\n", command_count); */
 	free(line);
 
+	/*str = prompt(argv, list);
+	if (str == NULL)
+		return (-1);
+*/
 	
 	return (result);
 }
 
-void free_args(char **args)
+/* betty style doc for function handle_interactive goes there */
+/**
+ * handle_interactive - Entry point
+ * @argv: first arg
+ * @list: second arg
+ * @str: third arg
+ * Return: int
+ */
+int handle_interactive(char **argv, char *str) /**/
 {
-    int i;
-    if (args == NULL)
-        return;
+	signal(SIGINT, handle_sigint);
+	if (initialize() == -1)
+		return (-1);
+	while (1)
+	{
+		if (process_command(argv, list, str) == -1)
+			break;
+	}
 
-    for (i = 0; args[i] != NULL; i++)
-    {
-        free(args[i]);
-    }
-    free(args);
+	free_list(list);
+	return (0);
 }

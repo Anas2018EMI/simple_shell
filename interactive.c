@@ -8,35 +8,31 @@
  * @str: third arg
  * Return: int
  */
-int handle_non_interactive(char **argv, node *list) /* , char *str */
+int handle_non_interactive(char **argv) /* , char *str */
 {
 	int interact;
 
-	interact = non_interact(argv, list); /* , str */
-	free_list(list);
+	interact = non_interact(argv); /* , str */
+	
 	return (interact);
 }
-
-/* betty style doc for function handle_interactive goes there */
+/* betty style doc for function free_args goes there */
 /**
- * handle_interactive - Entry point
- * @argv: first arg
- * @list: second arg
- * @str: third arg
- * Return: int
+ * free_args - Entry point
+ * @args: first arg
+ * Return: void
  */
-int handle_interactive(char **argv, node *list, char *str) /**/
+void free_args(char **args)
 {
-	signal(SIGINT, handle_sigint);
+    int i;
+    if (args == NULL)
+        return;
 
-	while (1)
-	{
-		if (process_command(argv, list, str) == -1)
-			break;
-	}
-
-	free_list(list);
-	return (0);
+    for (i = 0; args[i] != NULL; i++)
+    {
+        free(args[i]);
+    }
+    free(args);
 }
 
 /* betty style doc for function process_command goes there */
